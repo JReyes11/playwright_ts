@@ -13,7 +13,6 @@ This repository contains automation testing written in TypeScript using the Play
 - Start the Cypress Real World App on your local machine via: `yarn dev`
 
 
-
 This starts the application at http://localhost:3000.
 
 #
