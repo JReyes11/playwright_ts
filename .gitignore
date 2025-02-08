@@ -1,0 +1,9 @@
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+env.json
+/tests/realworldapp/api_*
+/support/apiRequests.ts
+/types/apiTypes.ts

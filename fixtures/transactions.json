@@ -1,0 +1,42 @@
+{
+  "requests": [
+    {
+      "name": "Lia",
+      "username": "Judah_Dietrich50",
+      "amount": "23.00",
+      "note": "request lia 23.00"
+    },
+    {
+      "name": "Darrel",
+      "username": "Dina20",
+      "amount": "44.00",
+      "note": "request Darrel 44.00"
+    }, 
+    {
+      "name": "Darrel",
+      "username": "Dina20",
+        "amount": "22.00",
+        "note": "request Darrel 22.00"
+      },
+      {
+        "name": "Lia",
+        "username": "Judah_Dietrich50",
+        "amount": "5.00",
+        "note": "request Lia 5.00"
+      }
+  ], 
+  "payments": [
+    {
+      "name": "Kristian",
+      "username": "Arvilla_Hegmann",
+      "amount": "11.00",
+      "note": "Pay Kristian 11.00"
+    },
+    {
+      "name": "Darrel",
+      "username": "Dina20",
+      "amount": "31.00",
+      "note": "Pay Darrel 31.00"
+    }
+  ]
+}
