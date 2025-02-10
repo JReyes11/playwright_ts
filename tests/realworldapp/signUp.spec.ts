@@ -1,5 +1,5 @@
 import { test } from "@playwright/test";
-import { signupAndSubmit, generateUserData} from "../../support/signup.ts";
+import signupSupport from "../../support/signup.ts";
 import sideNavPageObjects from "../../page_objects/sideNav";
 
 test.describe("SignUp Tests", async () => {
@@ -8,8 +8,8 @@ test.describe("SignUp Tests", async () => {
   });
 
   test("Populate and submit signup form", async ({ page }) => {      
-    const newUserData =  await generateUserData()
-    await signupAndSubmit(page, newUserData);    
+    const newUserData =  await signupSupport.generateUserData()
+    await signupSupport.signupAndSubmit(page, newUserData);    
     await page.locator(sideNavPageObjects.homeButton()).isVisible();
   });
 });

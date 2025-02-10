@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
 import users from "../../fixtures/userAccounts.json";
-import { loginAsUser } from "../../support/signIn.ts";
+import signinSupport from "../../support/signIn.ts";
 import sideNavPageObjects from "../../page_objects/sideNav.ts";
 import transactionPageObjects from "../../page_objects/transactions.ts";
 
@@ -22,7 +22,7 @@ test.describe("Intercept and Mock Responses", async () => {
         }),
       });
     });
-    await loginAsUser(page, users.validUser.username, users.validUser.password);
+    await signinSupport.loginAsUser(page, users.validUser.username, users.validUser.password);
     await page.locator(sideNavPageObjects.homeButton()).isVisible();
   });
 
@@ -42,7 +42,7 @@ test.describe("Intercept and Mock Responses", async () => {
         }),
       });
     });
-    await loginAsUser(page, users.validUser.username, users.validUser.password);
+    await signinSupport.loginAsUser(page, users.validUser.username, users.validUser.password);
     await page.locator(sideNavPageObjects.bankAccounts()).isVisible();
     await page.locator(sideNavPageObjects.bankAccounts()).click();
   });
@@ -69,7 +69,7 @@ test.describe("Intercept and Mock Responses", async () => {
         }),
       });
     });
-    await loginAsUser(page, users.validUser.username, users.validUser.password);
+    await signinSupport.loginAsUser(page, users.validUser.username, users.validUser.password);
     await page.locator(sideNavPageObjects.notifications()).isVisible();
     await page.locator(sideNavPageObjects.notifications()).click();
     await page.waitForTimeout(5000);
@@ -112,7 +112,7 @@ test.describe("Intercept and Mock Responses", async () => {
       });
     });
 
-    await loginAsUser(page, users.validUser.username, users.validUser.password);
+    await signinSupport.loginAsUser(page, users.validUser.username, users.validUser.password);
     await transactionPageObjects.mineTab(page).click();
     await page.waitForTimeout(5000);
   });

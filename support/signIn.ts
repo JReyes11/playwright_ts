@@ -1,23 +1,24 @@
+import { Page } from "playwright/test";
 import loginFields from "../page_objects/login.ts";
 
-export const populateUsername = async function (page) {
-  return await page.locator(loginFields.username());
-};
-export const populatePassword = async function (page) {
-  return await page.locator(loginFields.password());
-};
-export const clickSubmitButton = async function (page) {
-  await page.locator(loginFields.submitButton()).click();
-};
-export const getErrorMsg = async function(page) {
-  return await page.locator(loginFields.signInErrorMsg())
+class signinSupport {
+  populateUsername(page: Page) {
+    return page.locator(loginFields.username());
+  }
+  populatePassword(page: Page) {
+    return page.locator(loginFields.password());
+  }
+  submitButton(page: Page) {
+    return page.locator(loginFields.submitButton());
+  }
+  getErrorMsg(page: Page) {
+    return page.locator(loginFields.signInErrorMsg());
+  }
+  async loginAsUser(page: Page, username: string, password: string) {
+    await this.populateUsername(page).fill(username);
+    await this.populatePassword(page).fill(password);
+    await this.submitButton(page).click();
+  }
 }
-export const loginAsUser = async function (
-  page,
-  username: string,
-  password: string
-) {
-  await populateUsername(page).then((locator) => locator.fill(username));
-  await populatePassword(page).then((locator) => locator.fill(password));
-  await clickSubmitButton(page);
-};
+
+export default new signinSupport();
