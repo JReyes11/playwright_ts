@@ -1,12 +1,12 @@
 import { test, expect } from "@playwright/test";
-import { loginAsUser } from "../../support/signIn";
+import signinSupport from "../../support/signIn";
 import userAccounts from "../../fixtures/userAccounts.json";
 import transactionPageObjects from "../../page_objects/transactions";
 
 test.describe("Intercept and validate expected payload responses", async () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("http://localhost:3000/signin");
-    await loginAsUser(
+    await signinSupport.loginAsUser(
       page,
       userAccounts.validUser.username,
       userAccounts.validUser.password
