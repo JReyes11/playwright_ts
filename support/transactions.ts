@@ -27,6 +27,9 @@ class transactionsSupport {
   friendsTab(page) {
     return page.locator(transactionPageObjects.friendsTab())
   }
+  mineTab(page) {
+    return page.locator(transactionPageObjects.mineTab())
+  }
   async requestPayment(page, dataObject: transaction) {
     await this.newTransactionButton(page).click();
     await this.searchField(page).fill(dataObject.firstName);

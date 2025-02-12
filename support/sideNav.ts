@@ -2,6 +2,9 @@ import { expect, Page} from "@playwright/test";
 import sideNavPageObjects from "../page_objects/sideNav";
 
 class sideNavSupport {
+  userFullName(page: Page) {
+    return page.locator(sideNavPageObjects.userFullName())
+  }
   homeButton(page: Page) {
     return page.locator(sideNavPageObjects.homeButton());
   }

@@ -7,7 +7,14 @@ import userSettings from "../../support/userSettings";
 import dayjs from 'dayjs'
 
 test.describe("Side Navigation Test Cases", async () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeAll(() => {
+    const projectName = test.info().project.name;
+    if (projectName.includes("Mobile")) {
+      test.skip();
+    }
+  });
+
+  test.beforeEach(async ({ page }) => {  
     await page.goto("/");
     await signinSupport.loginAsUser(page, users.validUser.username, users.validUser.password);
   });

@@ -1,4 +1,7 @@
 class sideNavPageObjects {
+  userFullName() {
+    return '[data-test=sidenav-user-full-name]'
+  }
   homeButton() {
     return '[data-test="sidenav-home"]';
   }
