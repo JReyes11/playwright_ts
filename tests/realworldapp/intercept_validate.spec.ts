@@ -2,6 +2,7 @@ import { test, expect } from "@playwright/test";
 import signinSupport from "../../support/signIn";
 import userAccounts from "../../fixtures/userAccounts.json";
 import transactionPageObjects from "../../page_objects/transactions";
+import transactionsSupport from "../../support/transactions"
 
 test.describe("Intercept and validate expected payload responses", async () => {
   test.beforeEach(async ({ page }) => {
@@ -21,7 +22,7 @@ test.describe("Intercept and validate expected payload responses", async () => {
 
   test("[Friends Tab] Assert Sender / Receiver not null", async ({ page }) => {
     // click on the Friends Tab
-    await transactionPageObjects.friendsTab(page).click();
+    await transactionsSupport.friendsTab(page).click();
     const res = await page.waitForResponse("**/contacts");
     const body = await res.json();
 
