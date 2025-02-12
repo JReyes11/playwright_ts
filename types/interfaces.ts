@@ -12,8 +12,11 @@ export interface userSignIn {
 }
 
 export interface transaction {
-  name: string;
+  id: string;
+  firstName: string;
+  lastName: string;
   username: string;
   amount: string;
   note: string;
+  type: string;
 }

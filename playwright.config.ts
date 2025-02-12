@@ -38,15 +38,14 @@ export default defineConfig({
       name: "chromium",
       use: { ...devices["Desktop Chrome"] },
     },
-
-    // {
-    //   name: "Mobile Safari",
-    //   use: { ...devices["iPhone 15"], isMobile: true },
-    // },
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
-    // },
+    {
+      name: "Mobile Safari",
+      use: { ...devices["iPhone 15"], isMobile: true },
+    },
+    {
+      name: 'Mobile Chrome',
+      use: { ...devices['Pixel 5'], isMobile: true },
+    },
 
     // {
     //   name: 'webkit',

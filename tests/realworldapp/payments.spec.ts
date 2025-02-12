@@ -3,7 +3,6 @@ import users from "../../fixtures/userAccounts.json";
 import signinSupport from "../../support/signIn";
 import transactionsSupport from "../../support/transactions";
 import transactionLedger from "../../fixtures/transactions.json";
-import dayjs from 'dayjs'
 
 test.describe("Transactions: Request Payments", async () => {
   test.beforeEach(async ({ page }) => {    
@@ -13,18 +12,24 @@ test.describe("Transactions: Request Payments", async () => {
 
   test("Request payment from another user", async ({ page }) => {
     // random transaction from fixture.
-    const requests = transactionLedger.requests;
-    const randomObj = requests[Math.floor(Math.random() * requests.length)];
-    randomObj.amount = `${dayjs().format('ss')}` 
-    randomObj.note = `Requesting Payment of $${dayjs().format('ss')}`
+    const contactList = transactionLedger.users;
+    const randomObj = contactList[Math.floor(Math.random() * contactList.length)];
+    const randomNumber = Math.floor(Math.random() * 99)
+    randomObj.amount = `${randomNumber}`
+    randomObj.note = `${randomObj.id}`
+    randomObj.type = "Requested"
     await transactionsSupport.requestPayment(page, randomObj);
+    await transactionsSupport.verifyConfirmationPage(page, randomObj)    
   });
 
   test("Make payment to a user", async ({page}) => {
-    const payments = transactionLedger.payments;
-    const randomObj = payments[Math.floor(Math.random() * payments.length)];
-    randomObj.amount = `${dayjs().format('ss')}` 
-    randomObj.note = `Made Payment of $${dayjs().format('ss')}`
-    await transactionsSupport.makePayment(page, randomObj);        
+    const contactList = transactionLedger.users;
+    const randomObj = contactList[Math.floor(Math.random() * contactList.length)];
+    const randomNumber = Math.floor(Math.random() * 99)
+    randomObj.amount = `${randomNumber}`
+    randomObj.note = `${randomObj.id}`
+    randomObj.type = "Payment"
+    await transactionsSupport.makePayment(page, randomObj);      
+    await transactionsSupport.verifyConfirmationPage(page, randomObj)  
   })
 });

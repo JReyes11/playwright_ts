@@ -1,42 +1,31 @@
 {
-  "requests": [
+  "users": [
     {
-      "name": "Lia",
+      "id": "WHjJ4qR2R2",
+      "firstName": "Lia",
+      "lastName": "Rosenbaum",
       "username": "Judah_Dietrich50",
-      "amount": "23.00",
-      "note": "request lia 23.00"
+      "amount": "1.00",
+      "note": "temp",
+      "type": "temp"
     },
     {
-      "name": "Darrel",
+      "id": "_XblMqbuoP",
+      "firstName": "Darrel",
+      "lastName": "Ortiz",
       "username": "Dina20",
-      "amount": "44.00",
-      "note": "request Darrel 44.00"
-    }, 
+      "amount": "1.00",
+      "note": "temp",
+      "type": "temp"
+    },
     {
-      "name": "Darrel",
-      "username": "Dina20",
-        "amount": "22.00",
-        "note": "request Darrel 22.00"
-      },
-      {
-        "name": "Lia",
-        "username": "Judah_Dietrich50",
-        "amount": "5.00",
-        "note": "request Lia 5.00"
-      }
-  ], 
-  "payments": [
-    {
-      "name": "Kristian",
+      "id": "GjWovtg2hr",
+      "firstName": "Kristian",
+      "lastName": "Bradtke",
       "username": "Arvilla_Hegmann",
-      "amount": "11.00",
-      "note": "Pay Kristian 11.00"
-    },
-    {
-      "name": "Darrel",
-      "username": "Dina20",
-      "amount": "31.00",
-      "note": "Pay Darrel 31.00"
+      "amount": "1.00",
+      "note": "temp",
+      "type": "temp"
     }
   ]
 }
