@@ -1,10 +1,17 @@
 import { test } from "@playwright/test";
 import users from "../../fixtures/userAccounts.json";
 import signinSupport from "../../support/signIn.ts";
-import sideNavPageObjects from "../../page_objects/sideNav.ts";
-import transactionPageObjects from "../../page_objects/transactions.ts";
+import transactionsSupport from '../../support/transactions.ts'
+import sideNavSupport from '../../support/sideNav.ts'
 
 test.describe("Intercept and Mock Responses", async () => {
+  test.beforeAll(() => {
+    const projectName = test.info().project.name;
+    if (projectName.includes("Mobile")) {
+      test.skip();
+    }
+  });
+  
   test.beforeEach(async ({ page }) => {
     await page.goto("http://localhost:3000/signin");
   });
@@ -22,8 +29,8 @@ test.describe("Intercept and Mock Responses", async () => {
         }),
       });
     });
-    await signinSupport.loginAsUser(page, users.validUser.username, users.validUser.password);
-    await page.locator(sideNavPageObjects.homeButton()).isVisible();
+    await signinSupport.loginAsUser(page, users.validUser.username, users.validUser.password);    
+    await sideNavSupport.homeButton(page).isVisible()
   });
 
   test("Mock Bank Accounts displayed", async ({ page }) => {
@@ -43,8 +50,9 @@ test.describe("Intercept and Mock Responses", async () => {
       });
     });
     await signinSupport.loginAsUser(page, users.validUser.username, users.validUser.password);
-    await page.locator(sideNavPageObjects.bankAccounts()).isVisible();
-    await page.locator(sideNavPageObjects.bankAccounts()).click();
+    await sideNavSupport.bankAccounts(page).isVisible()
+    await sideNavSupport.bankAccounts(page).click()
+    
   });
 
   test("Notifications: Navigate and mock", async ({ page }) => {
@@ -70,8 +78,8 @@ test.describe("Intercept and Mock Responses", async () => {
       });
     });
     await signinSupport.loginAsUser(page, users.validUser.username, users.validUser.password);
-    await page.locator(sideNavPageObjects.notifications()).isVisible();
-    await page.locator(sideNavPageObjects.notifications()).click();
+    await sideNavSupport.notifications(page).isVisible()
+    await sideNavSupport.notifications(page).click()    
     await page.waitForTimeout(5000);
   });
 
@@ -113,7 +121,7 @@ test.describe("Intercept and Mock Responses", async () => {
     });
 
     await signinSupport.loginAsUser(page, users.validUser.username, users.validUser.password);
-    await transactionPageObjects.mineTab(page).click();
+    await transactionsSupport.mineTab(page).click();
     await page.waitForTimeout(5000);
   });
 });
