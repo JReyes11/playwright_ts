@@ -4,7 +4,7 @@ import sideNavSupport from '../../support/sideNav'
 import topNavSupport from '../../support/topNav'
 import users from "../../fixtures/userAccounts.json";
 import userSettings from "../../support/userSettings";
-import dayjs from 'dayjs'
+import helper from "../../support/helper"
 
 test.describe("Side Navigation Test Cases", async () => {
   test.beforeAll(() => {
@@ -32,19 +32,13 @@ test.describe("Side Navigation Test Cases", async () => {
     // by default, the side nav should be open. Assert expected elements.   
     await sideNavSupport.assertSideNavVisible(page)
 
-    // Click on My Account in SideNav,    
-    await sideNavSupport.myAccount(page).click()
-    
-    // then collapse sideNav
-    // await page.locator(topNav.menuIcon()).click()
-    await topNavSupport.menuIcon(page).click()
-    
-    // Assert sideNav elements no longer visible. 
+    // Click on My Account in SideNav, then collapse sideNav, assert no longer visible
+    await sideNavSupport.myAccount(page).click()        
+    await topNavSupport.menuIcon(page).click()        
     await sideNavSupport.assertSideNavHidden(page) 
 
     // My Account page:  Update phone number field with mocked number.
-    const lastFourNumbers = dayjs().format('mmss')  
-    const updatedPhoneNumber = `512-555-${lastFourNumbers}` 
+    const updatedPhoneNumber = await helper.randomPhoneNumber() 
     await userSettings.updatePhoneNumber(page, updatedPhoneNumber)
     await userSettings.saveButton(page).click()
 
@@ -54,7 +48,5 @@ test.describe("Side Navigation Test Cases", async () => {
     const networkRequest = await page.waitForResponse('**/checkAuth')
     const response = await networkRequest.json()
     expect(response.user.phoneNumber).toBe(updatedPhoneNumber)
-
-
   });
 });

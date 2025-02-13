@@ -13,7 +13,7 @@ test.describe("Intercept and Mock Responses", async () => {
   });
   
   test.beforeEach(async ({ page }) => {
-    await page.goto("http://localhost:3000/signin");
+    await page.goto("/signin");
   });
 
   test("[Mock] Login and mock user balance", async ({ page }) => {

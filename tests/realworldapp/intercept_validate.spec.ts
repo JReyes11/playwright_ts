@@ -1,12 +1,11 @@
 import { test, expect } from "@playwright/test";
 import signinSupport from "../../support/signIn";
 import userAccounts from "../../fixtures/userAccounts.json";
-import transactionPageObjects from "../../page_objects/transactions";
-import transactionsSupport from "../../support/transactions"
+import transactionsSupport from "../../support/transactions";
 
 test.describe("Intercept and validate expected payload responses", async () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("http://localhost:3000/signin");
+    await page.goto("/signin");
     await signinSupport.loginAsUser(
       page,
       userAccounts.validUser.username,
@@ -27,14 +26,14 @@ test.describe("Intercept and validate expected payload responses", async () => {
     const body = await res.json();
 
     // assert receiverNames is not null or undefined.
-    const receiverNames = body.results.map((f) => f.receiverName);
+    const receiverNames = body.results.map((e) => e.receiverName);
     receiverNames.forEach((element) => {
       expect(element).not.toBe(null);
       expect(element).not.toBe(undefined);
     });
 
     // assert senderNames are not null or undefined.
-    const senderNames = body.results.map((f) => f.senderName);
+    const senderNames = body.results.map((e) => e.senderName);
     senderNames.forEach((element) => {
       expect(element).not.toBe(null);
       expect(element).not.toBe(undefined);
