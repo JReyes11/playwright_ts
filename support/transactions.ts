@@ -30,21 +30,17 @@ class transactionsSupport {
   mineTab(page) {
     return page.locator(transactionPageObjects.mineTab())
   }
-  async requestPayment(page, dataObject: transaction) {
+  async performTransaction(page, dataObject: transaction) {
     await this.newTransactionButton(page).click();
     await this.searchField(page).fill(dataObject.firstName);
     await this.finderUserInSearchResults(page, dataObject.username).click();
     await this.amountField(page).fill(dataObject.amount);
     await this.notesField(page).fill(dataObject.note);
-    await this.requestPaymentButton(page).click();
-  }
-  async makePayment(page, dataObject: transaction) {
-    await this.newTransactionButton(page).click();
-    await this.searchField(page).fill(dataObject.firstName);
-    await this.finderUserInSearchResults(page, dataObject.username).click();
-    await this.amountField(page).fill(dataObject.amount);
-    await this.notesField(page).fill(dataObject.note);
-    await this.paymentButton(page).click();
+    if (dataObject.type == "Requested") {
+      await this.requestPaymentButton(page).click();
+    } else {
+      await this.paymentButton(page).click();
+    }    
   }
   async verifyConfirmationPage(page, dataObject: transaction) {    
     const contactName = `${dataObject.firstName} ${dataObject.lastName}`

@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, Page } from "@playwright/test";
 import users from "../../fixtures/userAccounts.json";
 import signinSupport from "../../support/signIn.ts";
 import sideNavSupport from "../../support/sideNav.ts"
@@ -8,13 +8,13 @@ test.describe("Login Tests", async () => {
     await page.goto('/signin');
   });
 
-  test("Valid Credentials; Confirm HomeButton", async ({ page }) => {
-    await signinSupport.loginAsUser(page, users.validUser.username, users.validUser.password);    
+  test("Valid Credentials; Confirm HomeButton", async ({ page }: {page: Page}) => {
+    await signinSupport.loginAsUser(page, users.validUser);    
     await sideNavSupport.homeButton(page).isVisible();
   });
 
-  test("InValid Credentials; Confirm Error Message", async ({ page }) => {
-    await signinSupport.loginAsUser(page, users.invalidUser.username, users.invalidUser.password);
+  test("InValid Credentials; Confirm Error Message", async ({ page }: {page: Page}) => {
+    await signinSupport.loginAsUser(page, users.invalidUser);
     const errorMsg = await signinSupport.getErrorMsg(page)
     errorMsg.innerText().then((value) => {
       expect(value).toContain("invalid")

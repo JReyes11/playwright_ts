@@ -1,5 +1,6 @@
 import { Page } from "playwright/test";
 import loginFields from "../page_objects/login.ts";
+import {userSignIn} from "../types/interfaces.ts"
 
 class signinSupport {
   populateUsername(page: Page) {
@@ -14,9 +15,9 @@ class signinSupport {
   getErrorMsg(page: Page) {
     return page.locator(loginFields.signInErrorMsg());
   }
-  async loginAsUser(page: Page, username: string, password: string) {
-    await this.populateUsername(page).fill(username);
-    await this.populatePassword(page).fill(password);
+  async loginAsUser(page: Page, credentials:userSignIn) {
+    await this.populateUsername(page).fill(credentials.username);
+    await this.populatePassword(page).fill(credentials.password);
     await this.submitButton(page).click();
   }
 }
