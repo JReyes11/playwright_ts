@@ -1,18 +1,29 @@
-class loginFields {
-  username() {    
-    return '#username';
+import { Page } from "@playwright/test";
+import { userSignIn } from "../types/interfaces.ts";
+
+class login {
+  public username(page: Page) {
+    return page.locator("#username");
   }
-  password() {
-    return "#password";
+  public password(page: Page) {
+    return page.locator("#password");
   }
-  rememberMe() {
-    return '[data-test="signin-remember-me"]';
+  public rememberMe(page: Page) {
+    return page.locator('[data-test="signin-remember-me"]');
   }
-  submitButton() {
-    return '[data-test="signin-submit"]';
+  public submitButton(page: Page) {
+    return page.locator('[data-test="signin-submit"]');
   }
-  signInErrorMsg() {
-    return "[data-test=signin-error]"
+  public signInErrorMsg(page: Page) {
+    return page.locator("[data-test=signin-error]");
+  }
+  async loginAsUser(page: Page, credentials: userSignIn) {
+    await this.username(page).fill(credentials.username);
+    await this.password(page).fill(credentials.password);
+    await this.submitButton(page).click();
+  }
+  async getErrorMessage(page: Page) {
+    return this.signInErrorMsg(page);
   }
 }
-export default new loginFields();
+export default new login();

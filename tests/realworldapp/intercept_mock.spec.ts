@@ -1,8 +1,8 @@
 import { test, Page } from "@playwright/test";
-import users from "../../fixtures/userAccounts.json";
-import signinSupport from "../../support/signIn.ts";
-import transactionsSupport from '../../support/transactions.ts'
-import sideNavSupport from '../../support/sideNav.ts'
+import userCredentials from "../../fixtures/userAccounts";
+import transactions from "../../page_objects/transactions";
+import login from "../../page_objects/login";
+import sideNavigation from '../../page_objects/sideNav.ts'
 import mockData from "../../fixtures/mockedResponses.json"
 
 test.describe("Intercept and Mock Responses: Desktop Only.", async () => { 
@@ -22,8 +22,9 @@ test.describe("Intercept and Mock Responses: Desktop Only.", async () => {
         body: JSON.stringify(mockData.login),
       });
     });
-    await signinSupport.loginAsUser(page, users.validUser);    
-    await sideNavSupport.homeButton(page).isVisible()
+    const credentials = userCredentials.validUser();
+    await login.loginAsUser(page, credentials);    
+    await sideNavigation.homeButton(page).isVisible()
   });
 
   test("Mock Bank Accounts displayed", async ({ page }: {page: Page}) => {
@@ -34,9 +35,10 @@ test.describe("Intercept and Mock Responses: Desktop Only.", async () => {
         body: JSON.stringify(mockData.bankAccount)
       });
     });
-    await signinSupport.loginAsUser(page, users.validUser);
-    await sideNavSupport.bankAccounts(page).isVisible()
-    await sideNavSupport.bankAccounts(page).click()
+    const credentials = userCredentials.validUser();
+    await login.loginAsUser(page, credentials);
+    await sideNavigation.bankAccounts(page).isVisible()
+    await sideNavigation.bankAccounts(page).click()
     
   });
 
@@ -48,9 +50,10 @@ test.describe("Intercept and Mock Responses: Desktop Only.", async () => {
         body: JSON.stringify(mockData.notifications),
       });
     });
-    await signinSupport.loginAsUser(page, users.validUser);
-    await sideNavSupport.notifications(page).isVisible()
-    await sideNavSupport.notifications(page).click()    
+    const credentials = userCredentials.validUser();
+    await login.loginAsUser(page, credentials);    
+    await sideNavigation.notifications(page).isVisible()
+    await sideNavigation.notifications(page).click()    
     await page.waitForTimeout(5000);
   });
 
@@ -70,9 +73,9 @@ test.describe("Intercept and Mock Responses: Desktop Only.", async () => {
         }),
       });
     });
-
-    await signinSupport.loginAsUser(page, users.validUser);
-    await transactionsSupport.mineTab(page).click();
+    const credentials = userCredentials.validUser();
+    await login.loginAsUser(page, credentials);
+    await transactions.mineTab(page).click();
     await page.waitForTimeout(5000);
   });
 });

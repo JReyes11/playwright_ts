@@ -1,15 +1,15 @@
-class topNav {
-  menuIcon() {
-    return "[data-testid=MenuIcon]";
+class topNavigation {
+  menuIcon(page) {
+    return page.locator("[data-testid=MenuIcon]");
   }
-  appNameLogo() {
-    return ".NavBar-logo";
+  appNameLogo(page) {
+    return page.locator(".NavBar-logo");
   }
-  newButton() {
-    return "[data-testid=AttachMoneyIcon]";
+  newButton(page) {
+    return page.locator("[data-testid=AttachMoneyIcon]");
   }
-  notificationsIcon() {
-    return "[data-testid=NotificationsIcon]";
+  notificationsIcon(page) {
+    return page.locator("[data-testid=NotificationsIcon]");
   }
 }
-export default new topNav();
+export default new topNavigation();

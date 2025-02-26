@@ -1,21 +1,37 @@
-class sideNavPageObjects {
-  userFullName() {
-    return '[data-test=sidenav-user-full-name]'
+import { expect } from "@playwright/test";
+
+class sideNavigation {
+  public userFullName(page) {
+    return page.locator("[data-test=sidenav-user-full-name]");
   }
-  homeButton() {
-    return '[data-test="sidenav-home"]';
+  public homeButton(page) {
+    return page.locator('[data-test="sidenav-home"]');
   }
-  myAccount() {
-    return "[data-test=sidenav-user-settings]";
+  public myAccount(page) {
+    return page.locator("[data-test=sidenav-user-settings]");
   }
-  bankAccounts() {
-    return '[data-test="sidenav-bankaccounts"]';
+  public bankAccounts(page) {
+    return page.locator('[data-test="sidenav-bankaccounts"]');
   }
-  notifications() {
-    return '[data-test="sidenav-notifications"]';
+  public notifications(page) {
+    return page.locator('[data-test="sidenav-notifications"]');
   }
-  logout() {
-    return '[data-testid=ExitToAppIcon]'
+  public logout(page) {
+    return page.locator("[data-testid=ExitToAppIcon]");
+  }
+  async assertMenuDisplayed(page) {
+    await expect(this.userFullName(page)).toBeVisible();
+    await expect(this.homeButton(page)).toBeVisible();
+    await expect(this.myAccount(page)).toBeVisible();
+    await expect(this.notifications(page)).toBeVisible();
+    await expect(this.logout(page)).toBeVisible();
+  }
+  async assertMenuNotDisplayed(page) {
+    await expect(this.userFullName(page)).toBeHidden();
+    await expect(this.homeButton(page)).toBeHidden();
+    await expect(this.myAccount(page)).toBeHidden();
+    await expect(this.notifications(page)).toBeHidden();
+    await expect(this.logout(page)).toBeHidden();
   }
 }
-export default new sideNavPageObjects();
+export default new sideNavigation();
