@@ -1,45 +1,42 @@
 import { test, expect, Page } from "@playwright/test";
-import signinSupport from "../../support/signIn";
-import sideNavSupport from '../../support/sideNav'
-import topNavSupport from '../../support/topNav'
-import users from "../../fixtures/userAccounts.json";
-import userSettings from "../../support/userSettings";
-import helper from "../../support/helper"
+import login from "../../page_objects/login";
+import sideNavigation from "../../page_objects/sideNav";
+import topNavigation from "../../page_objects/topNav";
+import userSettings from "../../page_objects/userSettings";
+import userCredentials from "../../fixtures/userAccounts";
+import helper from "../../support/helper";
 
 test.describe("Side Navigation: Desktop Browsers Only.", async () => {
-  test.beforeEach(async ({ page }: {page: Page}) => {  
+  test.beforeEach(async ({ page }: { page: Page }) => {
     const projectName = test.info().project.name;
     if (projectName.includes("Mobile")) {
       test.skip();
     }
     await page.goto("/");
-    await signinSupport.loginAsUser(page, users.validUser);
+    const credentials = userCredentials.validUser();
+    await login.loginAsUser(page, credentials);
   });
 
-  test("Collapse Side Navigation; Assert Elements", async ({ page }: {page: Page}) => {    
-    await sideNavSupport.assertSideNavVisible(page)    
-    await topNavSupport.menuIcon(page).click()
-    await sideNavSupport.assertSideNavHidden(page)
+  test("Collapse Side Navigation; Assert Elements", async ({page}) => {
+    await sideNavigation.assertMenuDisplayed(page) // assert side menu displayed
+    await topNavigation.menuIcon(page).click(); // click hamburger button to hide side menu
+    await sideNavigation.assertMenuNotDisplayed(page) // assert side menu no longer displayed
   });
 
-  test("MyAccount: Collapse Side Navigation, Update User PhoneNumber, Assert network request", async ({ page }: {page: Page}) => {
-    // by default, the side nav should be open. Assert expected elements.   
-    await sideNavSupport.assertSideNavVisible(page)
-
-    // Click on My Account in SideNav, collapse sideNav, assert no longer visible
-    await sideNavSupport.myAccount(page).click()        
-    await topNavSupport.menuIcon(page).click()        
-    await sideNavSupport.assertSideNavHidden(page) 
+  test("Update PhoneNumber, Incercept network request, Assert response", async ({page,}) => {    
+    await sideNavigation.assertMenuDisplayed(page) // assert side menu displayed    
+    await sideNavigation.myAccount(page).click();
+    await topNavigation.menuIcon(page).click();
+    await sideNavigation.assertMenuNotDisplayed(page) // assert side menu no longer displayed
 
     // My Account page:  Update phone number field with mocked number.
-    const updatedPhoneNumber = await helper.randomPhoneNumber() 
-    await userSettings.updatePhoneNumber(page, updatedPhoneNumber)
-    await userSettings.saveButton(page).click()
+    const updatedPhoneNumber = await helper.randomPhoneNumber();
+    await userSettings.updatePhoneNumber(page, updatedPhoneNumber);
+    await userSettings.saveButton(page).click();
 
-    // Assert success by intercepting network request. 
-    // Note: App does not show success message.
-    const networkRequest = await page.waitForResponse('**/checkAuth')
-    const response = await networkRequest.json()
-    expect(response.user.phoneNumber).toBe(updatedPhoneNumber)
+    // Assert success by intercepting network request.    
+    const networkRequest = await page.waitForResponse("**/checkAuth");
+    const response = await networkRequest.json();
+    expect(response.user.phoneNumber).toBe(updatedPhoneNumber);
   });
 });

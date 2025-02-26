@@ -1,5 +1,5 @@
 import userList from "../fixtures/transactions.json";
-import dayjs from 'dayjs'
+import dayjs from "dayjs";
 
 class helper {
   getRandomUser(type: string) {

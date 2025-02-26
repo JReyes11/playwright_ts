@@ -7,3 +7,7 @@ env.json
 /tests/realworldapp/api_*
 /support/apiRequests.ts
 /types/apiTypes.ts
+/tests/realworldapp/assertions.spec.ts
+/tests/realworldapp/assertions.ts
+
+
