@@ -18,7 +18,7 @@ test.describe("Login Tests", async () => {
     const credentials = userCredetials.invalidUser();
     await login.loginAsUser(Page, credentials);
     const errorMsg = await login.getErrorMessage(Page);
-    errorMsg.innerText().then((value) => {
+    await errorMsg.innerText().then((value) => {
       expect(value).toContain("invalid");
     });
   });
