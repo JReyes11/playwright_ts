@@ -4,31 +4,38 @@ import { faker } from "@faker-js/faker";
 import dayjs from "dayjs";
 
 class signup {
-  public firstName(page: Page) {
-    return page.locator("#firstName");
+  private page: Page; 
+  constructor(page: Page) {
+    this.page = page;
   }
-  public lastName(page: Page) {
-    return page.locator("#lastName");
+  static create(page: Page) {
+    return new signup(page)
   }
-  public username(page: Page) {
-    return page.locator("#username");
+  public firstName() {
+    return this.page.locator("#firstName");
   }
-  public password(page: Page) {
-    return page.locator("#password");
+  public lastName() {
+    return this.page.locator("#lastName");
   }
-  public confirmPassword(page: Page) {
-    return page.locator("#confirmPassword");
+  public username() {
+    return this.page.locator("#username");
   }
-  public submitBtn(page: Page) {
-    return page.locator("[data-test=signup-submit]");
+  public password() {
+    return this.page.locator("#password");
   }
-  async signupAndSubmit(page: Page, userObject: userSignUp) {
-    await this.firstName(page).fill(userObject.firstName);
-    await this.lastName(page).fill(userObject.lastName);
-    await this.username(page).fill(userObject.username);
-    await this.password(page).fill(userObject.password);
-    await this.confirmPassword(page).fill(userObject.confirmPassword);
-    await this.submitBtn(page).click();
+  public confirmPassword() {
+    return this.page.locator("#confirmPassword");
+  }
+  public submitBtn() {
+    return this.page.locator("[data-test=signup-submit]");
+  }
+  async signupAndSubmit(userObject: userSignUp) {
+    await this.firstName().fill(userObject.firstName);
+    await this.lastName().fill(userObject.lastName);
+    await this.username().fill(userObject.username);
+    await this.password().fill(userObject.password);
+    await this.confirmPassword().fill(userObject.confirmPassword);
+    await this.submitBtn().click();
   }
   generateUserData() {
     const name = faker.person.firstName();
@@ -41,4 +48,4 @@ class signup {
     };
   }
 }
-export default new signup();
+export default signup;
