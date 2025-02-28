@@ -1,27 +1,28 @@
+import { Page } from "@playwright/test";
 import { userSignUp } from "../types/interfaces.ts";
 import { faker } from "@faker-js/faker";
 import dayjs from "dayjs";
 
 class signup {
-  public firstName(page) {
+  public firstName(page: Page) {
     return page.locator("#firstName");
   }
-  public lastName(page) {
+  public lastName(page: Page) {
     return page.locator("#lastName");
   }
-  public username(page) {
+  public username(page: Page) {
     return page.locator("#username");
   }
-  public password(page) {
+  public password(page: Page) {
     return page.locator("#password");
   }
-  public confirmPassword(page) {
+  public confirmPassword(page: Page) {
     return page.locator("#confirmPassword");
   }
-  public submitBtn(page) {
+  public submitBtn(page: Page) {
     return page.locator("[data-test=signup-submit]");
   }
-  async signupAndSubmit(page, userObject: userSignUp) {
+  async signupAndSubmit(page: Page, userObject: userSignUp) {
     await this.firstName(page).fill(userObject.firstName);
     await this.lastName(page).fill(userObject.lastName);
     await this.username(page).fill(userObject.username);

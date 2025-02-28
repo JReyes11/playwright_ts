@@ -1,35 +1,35 @@
-import {expect} from '@playwright/test'
+import {expect, Page} from '@playwright/test'
 import { transaction } from "../types/interfaces.ts";
 
 class transactions {
-  public moneyIcon(page) {
+  public moneyIcon(page: Page) {
     return page.locator("[data-testid=AttachMoneyIcon]");
   }
-  public searchBar(page) {
+  public searchBar(page: Page) {
     return page.locator("[data-test=user-list-search-input]");
   }
-  public finderUserInSearchResults(page, username: string) {
+  public finderUserInSearchResults(page: Page, username: string) {
     return page.locator("span", { hasText: username }).first();
   }
-  public amountField(page) {
+  public amountField(page: Page) {
     return page.locator("#amount");
   }
-  public notesField(page) {
+  public notesField(page: Page) {
     return page.locator("#transaction-create-description-input");
   }
-  public requestButton(page) {
+  public requestButton(page: Page) {
     return page.locator("[data-test=transaction-create-submit-request]");
   }
-  public payButton(page) {
+  public payButton(page: Page) {
     return page.locator("[data-test=transaction-create-submit-payment]");
   }
-  public mineTab(page) {
+  public mineTab(page: Page) {
     return page.locator("[data-test=nav-personal-tab]");
   }
-  public friendsTab(page) {
+  public friendsTab(page: Page) {
     return page.locator('[data-test="nav-contacts-tab"]');
   }
-  async performTransaction(page, dataObject: transaction) {
+  async performTransaction(page: Page, dataObject: transaction) {
     await this.moneyIcon(page).click();
     await this.searchBar(page).fill(dataObject.firstName);
     await this.finderUserInSearchResults(page, dataObject.username).click();
@@ -41,14 +41,14 @@ class transactions {
       await this.payButton(page).click();
     }
   }
-  async verifyConfirmationPage(page, dataObject: transaction) {
+  async verifyConfirmationPage(page: Page, dataObject: transaction) {
     const contactName = `${dataObject.firstName} ${dataObject.lastName}`;
     const confirmContact = await this.confirmationPageText(page, contactName);
     await confirmContact.innerText().then((value) => {
       expect(value).toContain(contactName);
     });
   }
-  async confirmationPageText(page, value: string) {
+  async confirmationPageText(page: Page, value: string) {
     return page.locator("h2", { hasText: value });
   }
 }
