@@ -1,56 +1,63 @@
-import {expect} from '@playwright/test'
+import {expect, Page} from '@playwright/test'
 import { transaction } from "../types/interfaces.ts";
 
 class transactions {
-  public moneyIcon(page) {
-    return page.locator("[data-testid=AttachMoneyIcon]");
+  private page: Page
+  constructor(page: Page) {
+    this.page = page;
   }
-  public searchBar(page) {
-    return page.locator("[data-test=user-list-search-input]");
+  static create(page: Page) {
+    return new transactions(page)
   }
-  public finderUserInSearchResults(page, username: string) {
-    return page.locator("span", { hasText: username }).first();
+  public moneyIcon() {
+    return this.page.locator("[data-testid=AttachMoneyIcon]");
   }
-  public amountField(page) {
-    return page.locator("#amount");
+  public searchBar() {
+    return this.page.locator("[data-test=user-list-search-input]");
   }
-  public notesField(page) {
-    return page.locator("#transaction-create-description-input");
+  public finderUserInSearchResults(username: string) {
+    return this.page.locator("span", { hasText: username }).first();
   }
-  public requestButton(page) {
-    return page.locator("[data-test=transaction-create-submit-request]");
+  public amountField() {
+    return this.page.locator("#amount");
   }
-  public payButton(page) {
-    return page.locator("[data-test=transaction-create-submit-payment]");
+  public notesField() {
+    return this.page.locator("#transaction-create-description-input");
   }
-  public mineTab(page) {
-    return page.locator("[data-test=nav-personal-tab]");
+  public requestButton() {
+    return this.page.locator("[data-test=transaction-create-submit-request]");
   }
-  public friendsTab(page) {
-    return page.locator('[data-test="nav-contacts-tab"]');
+  public payButton() {
+    return this.page.locator("[data-test=transaction-create-submit-payment]");
   }
-  async performTransaction(page, dataObject: transaction) {
-    await this.moneyIcon(page).click();
-    await this.searchBar(page).fill(dataObject.firstName);
-    await this.finderUserInSearchResults(page, dataObject.username).click();
-    await this.amountField(page).fill(dataObject.amount);
-    await this.notesField(page).fill(dataObject.note);
+  public mineTab() {
+    return this.page.locator("[data-test=nav-personal-tab]");
+  }
+  public friendsTab() {
+    return this.page.locator('[data-test="nav-contacts-tab"]');
+  }
+  async performTransaction(dataObject: transaction) {
+    await this.moneyIcon().click();
+    await this.searchBar().fill(dataObject.firstName);
+    await this.finderUserInSearchResults(dataObject.username).click();
+    await this.amountField().fill(dataObject.amount);
+    await this.notesField().fill(dataObject.note);
     if (dataObject.type == "Requested") {
-      await this.requestButton(page).click();
+      await this.requestButton().click();
     } else {
-      await this.payButton(page).click();
+      await this.payButton().click();
     }
   }
-  async verifyConfirmationPage(page, dataObject: transaction) {
+  async verifyConfirmationPage(dataObject: transaction) {
     const contactName = `${dataObject.firstName} ${dataObject.lastName}`;
-    const confirmContact = await this.confirmationPageText(page, contactName);
+    const confirmContact = await this.confirmationPageText(contactName);
     await confirmContact.innerText().then((value) => {
       expect(value).toContain(contactName);
     });
   }
-  async confirmationPageText(page, value: string) {
-    return page.locator("h2", { hasText: value });
+  async confirmationPageText(value: string) {
+    return this.page.locator("h2", { hasText: value });
   }
 }
 
-export default new transactions();
+export default transactions;

@@ -2,28 +2,35 @@ import { Page } from "@playwright/test";
 import { userSignIn } from "../types/interfaces.ts";
 
 class login {
-  public username(page: Page) {
-    return page.locator("#username");
+  private page: Page
+  constructor(page: Page) {
+    this.page = page
   }
-  public password(page: Page) {
-    return page.locator("#password");
+  static create(page: Page) {
+    return new login(page)
   }
-  public rememberMe(page: Page) {
-    return page.locator('[data-test="signin-remember-me"]');
+  public username() {
+    return this.page.locator("#username");
   }
-  public submitButton(page: Page) {
-    return page.locator('[data-test="signin-submit"]');
+  public password() {
+    return this.page.locator("#password");
   }
-  public signInErrorMsg(page: Page) {
-    return page.locator("[data-test=signin-error]");
+  public rememberMe() {
+    return this.page.locator('[data-test="signin-remember-me"]');
   }
-  async loginAsUser(page: Page, credentials: userSignIn) {
-    await this.username(page).fill(credentials.username);
-    await this.password(page).fill(credentials.password);
-    await this.submitButton(page).click();
+  public submitButton() {
+    return this.page.locator('[data-test="signin-submit"]');
   }
-  async getErrorMessage(page: Page) {
-    return this.signInErrorMsg(page);
+  public signInErrorMsg() {
+    return this.page.locator("[data-test=signin-error]");
+  }
+  async loginAsUser(credentials: userSignIn) {
+    await this.username().fill(credentials.username);
+    await this.password().fill(credentials.password);
+    await this.submitButton().click();
+  }
+  async getErrorMessage() {
+    return this.signInErrorMsg();
   }
 }
-export default new login();
+export default login;

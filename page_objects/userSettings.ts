@@ -1,24 +1,33 @@
+import { Page } from "@playwright/test";
+
 class userSettings {
-  public userFirstName(page) {
-    return page.locator("[data-test=user-settings-firstName-input]");
+  private page: Page;
+  constructor(page: Page) {
+    this.page = page;
   }
-  public userLastName(page) {
-    return page.locator("[data-test=user-settings-lastName-input]");
+  static create(page: Page) {
+    return new userSettings(page)
   }
-  public userEmail(page) {
-    return page.locator("[data-test=user-settings-email-input]");
+  public userFirstName() {
+    return this.page.locator("[data-test=user-settings-firstName-input]");
   }
-  public phoneNumber(page) {
-    return page.locator("[data-test=user-settings-phoneNumber-input]");
+  public userLastName() {
+    return this.page.locator("[data-test=user-settings-lastName-input]");
   }
-  public saveButton(page) {
-    return page.locator("[data-test=user-settings-submit]");
+  public userEmail() {
+    return this.page.locator("[data-test=user-settings-email-input]");
   }
-  async updatePhoneNumber(page, phoneNumber: string) {
-    const field = this.phoneNumber(page);
+  public phoneNumber() {
+    return this.page.locator("[data-test=user-settings-phoneNumber-input]");
+  }
+  public saveButton() {
+    return this.page.locator("[data-test=user-settings-submit]");
+  }
+  async updatePhoneNumber(phoneNumber: string) {
+    const field = this.phoneNumber();
     field.clear();
     field.fill(phoneNumber);
   }
 }
 
-export default new userSettings();
+export default userSettings;

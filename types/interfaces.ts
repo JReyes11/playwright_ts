@@ -20,3 +20,8 @@ export interface transaction {
   note: string;
   type: string;
 }
+
+export interface contacts {
+  receiverName: string;
+  senderName: string;
+}

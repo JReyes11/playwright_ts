@@ -1,37 +1,44 @@
-import { expect } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 
-class sideNavigation {
-  public userFullName(page) {
-    return page.locator("[data-test=sidenav-user-full-name]");
+class sideNavigation { 
+  private page: Page; 
+  constructor(page: Page) {
+    this.page = page;
   }
-  public homeButton(page) {
-    return page.locator('[data-test="sidenav-home"]');
+  static create(page: Page) {
+    return new sideNavigation(page);
   }
-  public myAccount(page) {
-    return page.locator("[data-test=sidenav-user-settings]");
+  public userFullName() {
+    return this.page.locator("[data-test=sidenav-user-full-name]");
   }
-  public bankAccounts(page) {
-    return page.locator('[data-test="sidenav-bankaccounts"]');
+   public homeButton() {
+    return this.page.locator('[data-test="sidenav-home"]');
   }
-  public notifications(page) {
-    return page.locator('[data-test="sidenav-notifications"]');
+  public myAccount() {
+    return this.page.locator("[data-test=sidenav-user-settings]");
   }
-  public logout(page) {
-    return page.locator("[data-testid=ExitToAppIcon]");
+  public bankAccounts() {
+    return this.page.locator('[data-test="sidenav-bankaccounts"]');
   }
-  async assertMenuDisplayed(page) {
-    await expect(this.userFullName(page)).toBeVisible();
-    await expect(this.homeButton(page)).toBeVisible();
-    await expect(this.myAccount(page)).toBeVisible();
-    await expect(this.notifications(page)).toBeVisible();
-    await expect(this.logout(page)).toBeVisible();
+  public notifications() {
+    return this.page.locator('[data-test="sidenav-notifications"]');
   }
-  async assertMenuNotDisplayed(page) {
-    await expect(this.userFullName(page)).toBeHidden();
-    await expect(this.homeButton(page)).toBeHidden();
-    await expect(this.myAccount(page)).toBeHidden();
-    await expect(this.notifications(page)).toBeHidden();
-    await expect(this.logout(page)).toBeHidden();
+  public logout() {
+    return this.page.locator("[data-testid=ExitToAppIcon]");
+  }
+  async assertMenuDisplayed() {
+    await expect(this.userFullName()).toBeVisible();
+    await expect(this.homeButton()).toBeVisible();
+    await expect(this.myAccount()).toBeVisible();
+    await expect(this.notifications()).toBeVisible();
+    await expect(this.logout()).toBeVisible();
+  }
+  async assertMenuNotDisplayed() {
+    await expect(this.userFullName()).toBeHidden();
+    await expect(this.homeButton()).toBeHidden();
+    await expect(this.myAccount()).toBeHidden();
+    await expect(this.notifications()).toBeHidden();
+    await expect(this.logout()).toBeHidden();
   }
 }
-export default new sideNavigation();
+export default sideNavigation;

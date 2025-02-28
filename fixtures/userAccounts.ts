@@ -13,4 +13,4 @@ class userCredentials {
   }
 }
 
-export default new userCredentials()
+export default new userCredentials();
