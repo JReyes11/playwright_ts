@@ -24,16 +24,16 @@ test.describe("Side Navigation: Desktop Browsers Only.", async () => {
     await signIn.loginAsUser(credentials);
   });
 
-  test("Collapse Side Navigation; Assert Elements", async ({page}) => {
+  test("Collapse Side Navigation; Assert Elements", async () => {
     await sideNav.assertMenuDisplayed() // assert side menu displayed
-    await topNav.menuIcon(page).click(); // click hamburger button to hide side menu
+    await topNav.menuIcon().click(); // click hamburger button to hide side menu
     await sideNav.assertMenuNotDisplayed() // assert side menu no longer displayed
   });
 
   test("Update PhoneNumber, Incercept network request, Assert response", async ({page}) => {    
     await sideNav.assertMenuDisplayed() // assert side menu displayed    
     await sideNav.myAccount().click();
-    await topNav.menuIcon(page).click();
+    await topNav.menuIcon().click();
     await sideNav.assertMenuNotDisplayed() // assert side menu no longer displayed
 
     // My Account page:  Update phone number field with mocked number.
